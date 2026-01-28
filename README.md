@@ -1,54 +1,46 @@
-import java.util.Scanner;
-
-// Class 1: Factorial calculation
-class FactorialCalculator {
-
-    int factorial(int n) {
+public class FactorionChecker {
+    public static int factorial(int n) {
         int fact = 1;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             fact *= i;
         }
         return fact;
     }
+
+    public static boolean isFactorion(int number) {
+        int original = number;
+        int sum = 0;
+        while (number > 0) {
+            int digit = number % 10;
+            sum += factorial(digit);
+            number /= 10;
+        }
+        return sum == original;
+    }
 }
 
-// Class 2: Factorion finder (Main class)
-public class Factorion {
 
-    boolean isFactorion(int number) {
 
-        FactorialCalculator fc = new FactorialCalculator();
-        int temp = number;
-        int sum = 0;
 
-        while (temp > 0) {
-            int digit = temp % 10;
-            sum += fc.factorial(digit);
-            temp /= 10;
-        }
-
-        return sum == number;
-    }
-
+import java.util.Scanner;
+public class MainClass {
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
-        Factorion obj = new Factorion();
-
-        System.out.print("Enter the range limit: ");
-        int limit = sc.nextInt();
-
-        int count = 0;
-
-        System.out.println("\nFactorion numbers are:");
-        for (int i = 1; i <= limit; i++) {
-            if (obj.isFactorion(i)) {
+        System.out.print("Enter the lower bound of the range: ");
+        int lower = sc.nextInt();
+        System.out.print("Enter the upper bound of the range: ");
+        int upper = sc.nextInt();
+        System.out.println("Factorion numbers in the range:");
+        boolean found = false;
+        for (int i = lower; i <= upper; i++) {
+            if (FactorionChecker.isFactorion(i)) {
                 System.out.println(i);
-                count++;
+                found = true;
             }
         }
-
-        System.out.println("\nTotal Factorion Numbers = " + count);
+        if (!found) {
+            System.out.println("No factorion numbers found in the given range.");
+        }
         sc.close();
     }
 }
